@@ -177,10 +177,18 @@ function DiatonicHarmony({ chords, sevenths, onToggleSevenths, chordIdx, onChord
                   ))}
                 </div>
                 <div className="chord-fn" data-fn={c.function}>
-                  {c.function === "T"  ? "tonic" :
-                   c.function === "PD" ? "pre\u2011dominant" :
-                   c.function === "D"  ? "dominant" :
-                   c.function === "ST" ? "subtonic" : c.function}
+                  {(() => {
+                    // iii (in major) and III (e.g. in harmonic minor) substitute for
+                    // tonic in some analyses, mediant in others. Show both labels so
+                    // the panel doesn't pick a side.
+                    const baseRoman = (c.roman || "").replace(/[^iIvV]/g, "").toLowerCase();
+                    const isMediant = baseRoman === "iii";
+                    if (c.function === "T")  return isMediant ? "tonic / mediant" : "tonic";
+                    if (c.function === "PD") return "pre\u2011dominant";
+                    if (c.function === "D")  return "dominant";
+                    if (c.function === "ST") return "subtonic";
+                    return c.function;
+                  })()}
                 </div>
               </button>
             );
@@ -721,9 +729,9 @@ function ColorSchemeFab({ scheme, setScheme, theme, setTheme }) {
   return (
     <div className="cs-dock">
       {!open && (
-        <button className="cs-fab" onClick={() => setOpen(true)} title="Color schemes">
+        <button className="cs-fab" onClick={() => setOpen(true)} title="Color palette">
           <span className="cs-fab-glyph">◌</span>
-          <span>schemes</span>
+          <span>palette</span>
         </button>
       )}
       {open && (

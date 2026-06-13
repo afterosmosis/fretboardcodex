@@ -13,28 +13,28 @@ const PRACTICE_TEMPLATES = {
     { id: "w-single-str",  label: "Single-string {key} scale runs",           hint: "Up and down, one string at a time",          anchor: ".panel" },
     { id: "w-open-i4v",    label: "Open-chord I–IV–V cycle in {key}",         hint: "Focus on clean transitions",                 anchor: ".harmony" },
     { id: "w-ho-po",       label: "Hammer-on / pull-off pairs in {key}",      hint: "Through the scale on each string",           anchor: ".panel" },
-    { id: "w-octave",      label: "Octave hunt · {key} root",                  hint: "Find every octave across the fretboard",     anchor: ".panel" },
+    { id: "w-octave",      label: "Octave hunt · {tonic} root",                hint: "Find every octave across the fretboard",     anchor: ".panel" },
     { id: "w-pair-chrom",  label: "String-pair chromatic runs",                hint: "Strings 6-5, 5-4, 4-3, …" },
   ],
   technique: [
-    { id: "t-pent-12",     label: "{key} major pentatonic boxes 1 & 2",        hint: "Ascending + descending · metronome",    anchor: ".panel" },
-    { id: "t-pent-connect",label: "Connect {key} pentatonic boxes 1 → 2 → 3",  hint: "Across the neck, one position at a time", anchor: ".panel" },
-    { id: "t-min-pent",    label: "{key} minor pentatonic + ♭5 blues note",    hint: "All 5 boxes",                            anchor: ".panel" },
-    { id: "t-3nps",        label: "3-notes-per-string {key} major scale",      hint: "Positions 1–3 cleanly",                   anchor: ".panel" },
-    { id: "t-thirds",      label: "{key} major scale in thirds",                hint: "Ascending pairs: 1-3, 2-4, 3-5, …",       anchor: ".panel" },
-    { id: "t-alt-pick",    label: "Alternate picking · {key} pentatonic",      hint: "Strict down-up · metronome",              anchor: ".panel" },
-    { id: "t-legato",      label: "Legato run · {key} major (3nps)",           hint: "Slurs clean, no pick attacks on them",    anchor: ".panel" },
-    { id: "t-sweep",       label: "Sweep picking · {key} triads (str 2-3-4)",  hint: "Up- and down-sweeps · stay close",        anchor: ".harmony" },
-    { id: "t-skip",        label: "String skipping · {key} arpeggios",         hint: "Root → 5th → 3rd → octave",               anchor: ".panel" },
-    { id: "t-hybrid",      label: "Hybrid picking · {key} triads",             hint: "Pick + middle + ring fingers",            anchor: ".harmony" },
+    { id: "t-pent-12",     label: "{tonic} major pentatonic boxes 1 & 2",     hint: "Ascending + descending · metronome",    anchor: ".panel" },
+    { id: "t-pent-connect",label: "Connect {tonic} pentatonic boxes 1 → 2 → 3", hint: "Across the neck, one position at a time", anchor: ".panel" },
+    { id: "t-min-pent",    label: "{tonic} minor pentatonic + ♭5 blues note", hint: "All 5 boxes",                            anchor: ".panel" },
+    { id: "t-3nps",        label: "3-notes-per-string {tonic} major scale",    hint: "Positions 1–3 cleanly",                   anchor: ".panel" },
+    { id: "t-thirds",      label: "{tonic} major scale in thirds",             hint: "Ascending pairs: 1-3, 2-4, 3-5, …",       anchor: ".panel" },
+    { id: "t-alt-pick",    label: "Alternate picking · {tonic} pentatonic",    hint: "Strict down-up · metronome",              anchor: ".panel" },
+    { id: "t-legato",      label: "Legato run · {tonic} major (3nps)",         hint: "Slurs clean, no pick attacks on them",    anchor: ".panel" },
+    { id: "t-sweep",       label: "Sweep picking · {tonic} triads (str 2-3-4)", hint: "Up- and down-sweeps · stay close",        anchor: ".harmony" },
+    { id: "t-skip",        label: "String skipping · {tonic} arpeggios",       hint: "Root → 5th → 3rd → octave",               anchor: ".panel" },
+    { id: "t-hybrid",      label: "Hybrid picking · {tonic} triads",           hint: "Pick + middle + ring fingers",            anchor: ".harmony" },
   ],
   visualization: [
     { id: "v-caged-e",     label: "CAGED E shape in {key}",                    hint: "Verbalize root, 3rd, 5th in each position", anchor: ".panel" },
-    { id: "v-root-map",    label: "Map all {key} roots across 6 strings",      hint: "Speak each fret + string out loud",        anchor: ".panel" },
-    { id: "v-thirds-map",  label: "Every major 3rd from {key} roots",          hint: "Both directions on the neck",              anchor: ".panel" },
+    { id: "v-root-map",    label: "Map all {tonic} roots across 6 strings",   hint: "Speak each fret + string out loud",        anchor: ".panel" },
+    { id: "v-thirds-map",  label: "Every major 3rd from {tonic} roots",        hint: "Both directions on the neck",              anchor: ".panel" },
     { id: "v-scale-pos",   label: "{key} scale across 6 strings in one position", hint: "Stay in box · no shifts",              anchor: ".panel" },
     { id: "v-caged-connect", label: "Connect adjacent CAGED shapes in {key}",  hint: "Identify shared notes between shapes",     anchor: ".panel" },
-    { id: "v-imaj7-tones", label: "Locate every {key} Imaj7 chord tone",       hint: "R · 3 · 5 · 7 across the neck",            anchor: ".panel" },
+    { id: "v-imaj7-tones", label: "Locate every Imaj7 chord tone in {key}",    hint: "R · 3 · 5 · 7 across the neck",            anchor: ".panel" },
     { id: "v-pent-in-e",   label: "Pentatonic-to-CAGED overlay in {key}",      hint: "How box 1 lives inside the E shape",       anchor: ".panel" },
     { id: "v-bvii-roots",  label: "Every ♭VII root in {key}",                  hint: "A frequent modal-interchange target",      anchor: ".interchange" },
     { id: "v-rel-min",     label: "Relative-minor pentatonic in {key}",        hint: "How it sits inside the parent major",      anchor: ".keycard" },
@@ -134,7 +134,7 @@ function mulberry32(seed) {
   };
 }
 
-function composeRoutine({ length, focus, keyName, seed }) {
+function composeRoutine({ length, focus, keyName, tonicName, seed }) {
   const shape = SESSION_SHAPES[length][focus];
   const rng = mulberry32(seed || 1);
   const used = new Set();
@@ -147,6 +147,10 @@ function composeRoutine({ length, focus, keyName, seed }) {
     return t;
   };
 
+  const fill = (s) => s
+    .replace(/\{tonic\}/g, tonicName || keyName)
+    .replace(/\{key\}/g, keyName);
+
   let cursor = 0;
   const blocks = shape.map(([cat, dur]) => {
     const t = pick(cat);
@@ -155,8 +159,8 @@ function composeRoutine({ length, focus, keyName, seed }) {
       duration: dur,
       startMin: cursor,
       endMin: cursor + dur,
-      label: t.label.replace(/\{key\}/g, keyName),
-      hint:  t.hint.replace(/\{key\}/g, keyName),
+      label: fill(t.label),
+      hint:  fill(t.hint),
       anchor: t.anchor || null,
       templateId: t.id,
     };
@@ -187,10 +191,11 @@ function PracticeSession({ tonic, scale, keyInfo, onJump, sectionProps, dragHand
   }, [length, focus, open]);
 
   const keyName = `${window.Theory.pretty(tonic)} ${scaleLabel(scale)}`;
+  const tonicName = window.Theory.pretty(tonic);
 
   const routine = React.useMemo(
-    () => composeRoutine({ length, focus, keyName, seed }),
-    [length, focus, keyName, seed]
+    () => composeRoutine({ length, focus, keyName, tonicName, seed }),
+    [length, focus, keyName, tonicName, seed]
   );
 
   const focusEntry = FOCUS_LIST.find(f => f.id === focus) || FOCUS_LIST[0];

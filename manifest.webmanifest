@@ -1,6 +1,6 @@
 {
-  "name": "fretboard codex",
-  "short_name": "fretboard",
+  "name": "Fretboard Codex",
+  "short_name": "Fretboard",
   "description": "Theory-driven fretboard, scales, voicings, modal interchange — a pocket reference for guitarists.",
   "start_url": "./",
   "scope": "./",
