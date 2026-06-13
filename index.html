@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>fretboard codex · foundation</title>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="description" content="Theory-driven fretboard, scales, voicings, modal interchange." />
+
+<!-- PWA / install -->
+<link rel="manifest" href="manifest.webmanifest" />
+<meta name="theme-color" content="#f2f4f6" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1f2326" media="(prefers-color-scheme: dark)" />
+<meta name="application-name" content="fretboard codex" />
+
+<!-- iOS add-to-home-screen -->
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="fretboard" />
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="icons/icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="icons/icon-512.png" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/tonal@6.4.1/browser/tonal.min.js"></script>
+
+<link rel="stylesheet" href="foundation.css">
+</head>
+<body>
+
+<!-- Worn-tech texture filters -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" stitchTiles="stitch" />
+    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.10 0" />
+  </filter>
+  <filter id="grain-strong" x="0" y="0" width="100%" height="100%">
+    <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="11" stitchTiles="stitch" />
+    <feColorMatrix type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.22 0" />
+  </filter>
+</svg>
+
+<div id="root"></div>
+
+<script src="theory.js"></script>
+<script type="text/babel" src="tweaks-panel.jsx"></script>
+<script type="text/babel" src="collapsible.jsx"></script>
+<script type="text/babel" src="fretboard.jsx"></script>
+<script type="text/babel" src="voicings.jsx"></script>
+<script type="text/babel" src="circle.jsx"></script>
+<script type="text/babel" src="interchange.jsx"></script>
+<script type="text/babel" src="practice.jsx"></script>
+<script type="text/babel" src="foundation.jsx"></script>
+
+<!-- Service worker registration.
+     Skipped on file:// and on the editor preview iframe (sandboxed, no SW).
+     Listens for waiting workers and prompts on next visit. -->
+<script>
+  (function () {
+    if (!('serviceWorker' in navigator)) return;
+    if (location.protocol !== 'https:' && location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') return;
+    window.addEventListener('load', function () {
+      navigator.serviceWorker.register('service-worker.js').then(function (reg) {
+        // Auto-activate a new SW the next time all tabs are closed; you can also
+        // surface a toast here when reg.waiting is non-null to let users update now.
+        reg.addEventListener('updatefound', function () {
+          var nw = reg.installing;
+          if (!nw) return;
+          nw.addEventListener('statechange', function () {
+            if (nw.state === 'installed' && navigator.serviceWorker.controller) {
+              // A new version is ready. Pass 'SKIP_WAITING' to activate immediately.
+              // reg.waiting && reg.waiting.postMessage('SKIP_WAITING');
+            }
+          });
+        });
+      }).catch(function (err) {
+        console.warn('[sw] registration failed', err);
+      });
+    });
+  })();
+</script>
+
+</body>
+</html>
