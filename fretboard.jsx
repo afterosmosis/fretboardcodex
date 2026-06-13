@@ -125,7 +125,7 @@ function Fretboard({ frets = 12, lefty = false, palette = "color", markers = [],
           <text key={f} x={x} y={padT + innerH + 16}
                 fontFamily="JetBrains Mono, monospace" fontSize="9" fontWeight="400"
                 fill={subInk} textAnchor="middle"
-                opacity={[3,5,7,9,12,15,17,19,21,24].includes(f) ? 1 : 0.6}>{f}</text>
+                opacity={[3,5,7,9,12,15,17,19,21,24].includes(f) ? 1 : 0.85}>{f}</text>
         );
       })}
       {/* Markers */}

@@ -31,8 +31,8 @@
   --surface-2: oklch(0.92 0.010 228);
   --ink:       oklch(0.22 0.018 240);
   --ink-2:     oklch(0.38 0.016 240);
-  --ink-3:     oklch(0.55 0.012 240);
-  --ink-4:     oklch(0.72 0.010 240);
+  --ink-3:     oklch(0.45 0.014 240);   /* WCAG AA: ~4.6:1 on --bg */
+  --ink-4:     oklch(0.58 0.012 240);   /* AA large-text: ~3.2:1 on --bg */
   --rule:      oklch(0.86 0.010 230);
   --rule-2:    oklch(0.76 0.012 230);
   --accent:    oklch(0.62 0.16 48);   /* burnt orange — warm against cool field */
@@ -1722,7 +1722,9 @@ button.keycard-cell.clickable:hover .sub-cta {
   --rule-2:    oklch(0.48 0.014 248);
   --accent:    oklch(0.82 0.14 75);
   --accent-ink: oklch(0.18 0.010 248);
-  --c-root:  oklch(0.82 0.14 75);
+  /* Root rotated 75 → 50 to clear the 7th (90) — they were colliding for
+     deuteranopia/protanopia at similar lightness. */
+  --c-root:  oklch(0.78 0.15 50);
   --c-3rd:   oklch(0.72 0.10 230);
   --c-5th:   oklch(0.74 0.10 160);
   --c-7th:   oklch(0.86 0.13 90);
@@ -1742,10 +1744,12 @@ button.keycard-cell.clickable:hover .sub-cta {
   --rule-2:    oklch(0.74 0.014 220);
   --accent:    oklch(0.62 0.12 170);
   --accent-ink: oklch(0.985 0.004 220);
-  --c-root:  oklch(0.60 0.13 170);
-  --c-3rd:   oklch(0.52 0.14 250);
-  --c-5th:   oklch(0.58 0.16 110);
-  --c-7th:   oklch(0.68 0.16 60);
+  /* Chord-tone colors pinned to Okabe-Ito so meaning stays consistent across
+     schemes. The teal accent remains the scheme's visual identity. */
+  --c-root:  oklch(0.62 0.18 42);
+  --c-3rd:   oklch(0.52 0.14 240);
+  --c-5th:   oklch(0.56 0.14 160);
+  --c-7th:   oklch(0.72 0.16 80);
 }
 [data-scheme="verdigris"][data-theme="dark"] {
   --bg:        oklch(0.22 0.012 220);
@@ -1760,10 +1764,10 @@ button.keycard-cell.clickable:hover .sub-cta {
   --rule-2:    oklch(0.50 0.014 220);
   --accent:    oklch(0.74 0.12 170);
   --accent-ink: oklch(0.20 0.010 220);
-  --c-root:  oklch(0.74 0.12 170);
-  --c-3rd:   oklch(0.72 0.10 245);
-  --c-5th:   oklch(0.76 0.12 110);
-  --c-7th:   oklch(0.80 0.13 60);
+  --c-root:  oklch(0.78 0.15 50);
+  --c-3rd:   oklch(0.72 0.12 230);
+  --c-5th:   oklch(0.74 0.12 160);
+  --c-7th:   oklch(0.82 0.14 85);
 }
 
 /* ---- 4. RUST + BONE — bone + iron oxide ---- */
@@ -1818,10 +1822,12 @@ button.keycard-cell.clickable:hover .sub-cta {
   --rule-2:    oklch(0.74 0.014 140);
   --accent:    oklch(0.55 0.16 145);
   --accent-ink: oklch(0.985 0.006 140);
-  --c-root:  oklch(0.55 0.16 145);
-  --c-3rd:   oklch(0.50 0.14 250);
-  --c-5th:   oklch(0.58 0.13 95);
-  --c-7th:   oklch(0.66 0.15 55);
+  /* Chord-tone colors pinned to Okabe-Ito; the green accent remains the
+     scheme's identity. */
+  --c-root:  oklch(0.62 0.18 42);
+  --c-3rd:   oklch(0.52 0.14 240);
+  --c-5th:   oklch(0.56 0.14 160);
+  --c-7th:   oklch(0.72 0.16 80);
 }
 [data-scheme="phosphor"][data-theme="dark"] {
   --bg:        oklch(0.18 0.010 145);
@@ -1836,10 +1842,10 @@ button.keycard-cell.clickable:hover .sub-cta {
   --rule-2:    oklch(0.42 0.024 145);
   --accent:    oklch(0.85 0.16 145);
   --accent-ink: oklch(0.16 0.010 145);
-  --c-root:  oklch(0.85 0.16 145);
-  --c-3rd:   oklch(0.74 0.12 200);
-  --c-5th:   oklch(0.80 0.14 110);
-  --c-7th:   oklch(0.86 0.15 70);
+  --c-root:  oklch(0.78 0.15 50);
+  --c-3rd:   oklch(0.72 0.12 230);
+  --c-5th:   oklch(0.74 0.12 160);
+  --c-7th:   oklch(0.82 0.14 85);
 }
 
 /* ---- 6. HAZARD — concrete + radiation yellow ---- */
