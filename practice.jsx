@@ -295,7 +295,7 @@ function SessionTimeline({ blocks, total, onJump }) {
               {b.anchor ? (
                 <button className="tl-jump-btn" onClick={() => onJump(b.anchor)}
                   title={`Jump to ${b.anchor.replace(".", "")}`}>
-                  open <span aria-hidden="true">→</span>
+                  goto <span aria-hidden="true">→</span>
                 </button>
               ) : (
                 <span className="tl-jump-muted">—</span>

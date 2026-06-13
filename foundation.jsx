@@ -111,7 +111,7 @@ function KeyCard({ keyInfo, onSwapTo, palette }) {
 
 // ============== DiatonicHarmony ==============
 function DiatonicHarmony({ chords, sevenths, onToggleSevenths, chordIdx, onChordFocus, onClearFocus, family }) {
-  const [open, setOpen] = window.useCollapse("diatonic");
+  const [open, setOpen] = window.useCollapse("diatonic", true, [".harmony"]);
 
   if (!chords) {
     return (
@@ -405,17 +405,26 @@ function App() {
 
   const jumpTo = React.useCallback((selector) => {
     if (!selector) return;
-    const el = document.querySelector(selector);
-    if (!el) return;
-    const rect = el.getBoundingClientRect();
-    window.scrollTo({
-      top: rect.top + window.scrollY - 64,
-      behavior: "smooth",
-    });
-    el.classList.remove("jump-flash");
-    void el.offsetWidth;
-    el.classList.add("jump-flash");
-    window.setTimeout(() => el.classList.remove("jump-flash"), 1400);
+    // Ask any matching collapsible panel to expand itself before we measure
+    // and scroll. We then defer the scroll until React has flushed the
+    // resulting re-render (two rAFs = one for commit, one for paint).
+    window.dispatchEvent(new CustomEvent("fretwise:open-section", {
+      detail: { selector },
+    }));
+    const doScroll = () => {
+      const el = document.querySelector(selector);
+      if (!el) return;
+      const rect = el.getBoundingClientRect();
+      window.scrollTo({
+        top: rect.top + window.scrollY - 64,
+        behavior: "smooth",
+      });
+      el.classList.remove("jump-flash");
+      void el.offsetWidth;
+      el.classList.add("jump-flash");
+      window.setTimeout(() => el.classList.remove("jump-flash"), 1400);
+    };
+    requestAnimationFrame(() => requestAnimationFrame(doScroll));
   }, []);
 
   const extensionsActive = !!extendedObj;

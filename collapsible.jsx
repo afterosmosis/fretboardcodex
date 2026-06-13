@@ -4,7 +4,7 @@
    localStorage under "fretwise:collapse:<storageKey>".
    Loaded before panel scripts so they can use window.useCollapse. */
 
-function useCollapse(storageKey, defaultOpen = true) {
+function useCollapse(storageKey, defaultOpen = true, openOnSelectors = null) {
   const key = "fretwise:collapse:" + storageKey;
   const [open, setOpen] = React.useState(() => {
     try {
@@ -15,6 +15,23 @@ function useCollapse(storageKey, defaultOpen = true) {
   React.useEffect(() => {
     try { localStorage.setItem(key, open ? "1" : "0"); } catch {}
   }, [open, key]);
+
+  // Listen for cross-component "open this section" requests (from practice
+  // routine goto buttons, etc.). If the dispatched selector matches one this
+  // panel responds to, force-open.
+  React.useEffect(() => {
+    if (!openOnSelectors || !openOnSelectors.length) return;
+    const targets = Array.isArray(openOnSelectors) ? openOnSelectors : [openOnSelectors];
+    const onOpen = (e) => {
+      const sel = e?.detail?.selector;
+      if (sel && targets.includes(sel)) setOpen(true);
+    };
+    window.addEventListener("fretwise:open-section", onOpen);
+    return () => window.removeEventListener("fretwise:open-section", onOpen);
+  // openOnSelectors is expected to be a static array literal at the call site.
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return [open, setOpen];
 }
 

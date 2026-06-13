@@ -6,7 +6,7 @@
 */
 
 function ModalInterchange({ tonic, scale, family, palette, frets, onFocusChord, sectionProps, dragHandle }) {
-  const [open, setOpen] = window.useCollapse("interchange");
+  const [open, setOpen] = window.useCollapse("interchange", true, [".interchange"]);
   const groups = React.useMemo(
     () => window.Theory.borrowedChords(tonic, scale),
     [tonic, scale]
