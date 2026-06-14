@@ -687,6 +687,9 @@ function App() {
 
         {/* ============== FOOTER (minimal) ============== */}
         <footer className="footer">
+          <span className="codex-mark codex-mark--by">
+            created by <a href="https://afterosmosis.com" target="_blank" rel="noopener noreferrer">afterosmosis</a>
+          </span>
           <span className="codex-mark">// fretboardcodex.com</span>
         </footer>
       </div>

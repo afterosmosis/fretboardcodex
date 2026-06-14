@@ -2211,6 +2211,8 @@ button.keycard-cell.clickable:hover .sub-cta {
   padding: 18px 4px 6px;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
+  gap: 14px;
   border-top: 1px solid var(--rule);
 }
 .footer .codex-mark {
@@ -2221,6 +2223,14 @@ button.keycard-cell.clickable:hover .sub-cta {
   color: var(--accent);
   font-weight: 500;
 }
+.footer .codex-mark--by { color: var(--ink-3, var(--ink-2)); }
+.footer .codex-mark--by a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklch, var(--accent) 35%, transparent);
+  transition: border-color 120ms ease;
+}
+.footer .codex-mark--by a:hover { border-bottom-color: var(--accent); }
 
 /* =========================================================================
    STAGE 5 — Compact density (tweakable)
