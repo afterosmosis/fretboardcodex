@@ -689,8 +689,10 @@ function App() {
         <footer className="footer">
           <span className="codex-mark codex-mark--by">
             created by <a href="https://afterosmosis.com" target="_blank" rel="noopener noreferrer">afterosmosis</a>
+            <span className="codex-mark__sep">//</span>
+            <a href="https://buymeacoffee.com/afterosmosis" target="_blank" rel="noopener noreferrer">buymeacoffee</a>
           </span>
-          <span className="codex-mark">// fretboardcodex.com</span>
+          <span className="codex-mark">fretboardcodex.com</span>
         </footer>
       </div>
 

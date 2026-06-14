@@ -2210,11 +2210,17 @@ button.keycard-cell.clickable:hover .sub-cta {
   margin-top: 28px;
   padding: 18px 4px 6px;
   display: flex;
-  justify-content: flex-end;
+  justify-content: space-between;
   align-items: center;
-  gap: 14px;
+  gap: 16px;
   border-top: 1px solid var(--rule);
 }
+.footer .codex-mark--by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer .codex-mark__sep { opacity: 0.55; }
 .footer .codex-mark {
   font-family: var(--f-mono);
   font-size: 10px;
