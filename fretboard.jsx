@@ -53,8 +53,12 @@ function Fretboard({ frets = 12, lefty = false, palette = "color", markers = [],
   const openOffset = 16;
   const labelOffset = 36;
 
+  // String index 0 = low E. Render it at the BOTTOM (standard fretboard view):
+  // high e on top, low E on the bottom. Lefty mirrors vertically.
+  const rowFor = (s) => lefty ? s : (stringCount - 1 - s);
+
   const xy = (s, f) => {
-    const sIdx = lefty ? (stringCount - 1 - s) : s;
+    const sIdx = rowFor(s);
     const fIdx = lefty ? (frets - f) : f;
     let x;
     if (f === 0) {
@@ -87,8 +91,8 @@ function Fretboard({ frets = 12, lefty = false, palette = "color", markers = [],
       {/* Strings */}
       {stringYs.map((y,i) => (
         <line key={i} x1={padL} y1={y} x2={padL+innerW} y2={y}
-              stroke={inkVar} strokeOpacity={0.55 + (stringCount-1-i)*0.07}
-              strokeWidth={0.7 + (stringCount-1-i)*0.22} />
+              stroke={inkVar} strokeOpacity={0.55 + i*0.07}
+              strokeWidth={0.7 + i*0.22} />
       ))}
       {/* Inlays */}
       {inlaySingles.map(f => {
@@ -109,7 +113,7 @@ function Fretboard({ frets = 12, lefty = false, palette = "color", markers = [],
       })}
       {/* String name labels */}
       {stringNames.map((n,i) => {
-        const yIdx = lefty ? stringCount-1-i : i;
+        const yIdx = rowFor(i);
         const x = lefty ? fretXs[frets] + labelOffset : fretXs[0] - labelOffset;
         return (
           <text key={n+i} x={x} y={stringYs[yIdx]+3}
