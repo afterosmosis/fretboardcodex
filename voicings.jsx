@@ -314,10 +314,13 @@ function ExtensionsBuilder({ chord, activeExtensions, setActiveExtensions }) {
         {extObj.extNotes.length > 0 && (
           <div className="ext-result-notes">
             <span className="muted">added · </span>
-            {extObj.extNotes.map((e, i) => (
+            {[...extObj.extNotes]
+              .sort((a, b) => (parseInt(String(a.label).replace(/\D/g, ''), 10) || 0)
+                             - (parseInt(String(b.label).replace(/\D/g, ''), 10) || 0))
+              .map((e, i, arr) => (
               <span key={e.id} className="ext-result-note">
                 {e.label} = <b>{Th.pretty(e.note)}</b>
-                {i < extObj.extNotes.length - 1 ? <span className="muted">  ·  </span> : null}
+                {i < arr.length - 1 ? <span className="muted">  ·  </span> : null}
               </span>
             ))}
           </div>
