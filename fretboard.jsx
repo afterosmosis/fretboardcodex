@@ -54,8 +54,9 @@ function Fretboard({ frets = 12, lefty = false, palette = "color", markers = [],
   const labelOffset = 36;
 
   // String index 0 = low E. Render it at the BOTTOM (standard fretboard view):
-  // high e on top, low E on the bottom. Lefty mirrors vertically.
-  const rowFor = (s) => lefty ? s : (stringCount - 1 - s);
+  // high e on top, low E on the bottom. Lefty mirrors horizontally only (fret
+  // direction), so the vertical string order stays the same.
+  const rowFor = (s) => stringCount - 1 - s;
 
   const xy = (s, f) => {
     const sIdx = rowFor(s);
