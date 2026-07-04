@@ -708,9 +708,8 @@ button.keycard-cell.clickable:hover .sub-cta {
   text-transform: uppercase;
   color: var(--ink-4);
 }
-.chord-fn[data-fn="T"]  { color: var(--ink-3); }
-.chord-fn[data-fn="D"]  { color: var(--accent); opacity: 0.85; }
-.chord-fn[data-fn="PD"] { color: var(--ink-3); }
+.chord-fn[data-fn="tonic"]    { color: var(--ink-3); }
+.chord-fn[data-fn="dominant"] { color: var(--accent); opacity: 0.85; }
 .chord-fn::before { content: "// "; color: var(--ink-4); }
 
 .progressions {

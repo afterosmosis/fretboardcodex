@@ -176,19 +176,8 @@ function DiatonicHarmony({ chords, sevenths, onToggleSevenths, chordIdx, onChord
                     </span>
                   ))}
                 </div>
-                <div className="chord-fn" data-fn={c.function}>
-                  {(() => {
-                    // iii (in major) and III (e.g. in harmonic minor) substitute for
-                    // tonic in some analyses, mediant in others. Show both labels so
-                    // the panel doesn't pick a side.
-                    const baseRoman = (c.roman || "").replace(/[^iIvV]/g, "").toLowerCase();
-                    const isMediant = baseRoman === "iii";
-                    if (c.function === "T")  return isMediant ? "tonic / mediant" : "tonic";
-                    if (c.function === "PD") return "pre\u2011dominant";
-                    if (c.function === "D")  return "dominant";
-                    if (c.function === "ST") return "subtonic";
-                    return c.function;
-                  })()}
+                <div className="chord-fn" data-fn={c.degreeName}>
+                  {c.degreeName}
                 </div>
               </button>
             );

@@ -220,9 +220,24 @@
     return r;
   }
 
-  // Major-family function tags by scale degree (0-based)
-  const FUNC_MAJOR = ["T","PD","T","PD","D","T","D"];
-  const FUNC_MINOR = ["T","PD","T","PD","D","T","ST"]; // ST = subtonic
+  // Scale-degree names (0-based). These are true for ANY diatonic scale/mode,
+  // unlike tonal "function" tags (T/PD/D), which only make sense in major/minor
+  // and mislead when applied to modes. The 7th degree is "leading tone" when it
+  // sits a semitone below the tonic, otherwise "subtonic".
+  const DEGREE_NAMES = [
+    "tonic", "supertonic", "mediant", "subdominant",
+    "dominant", "submediant", "subtonic",
+  ];
+
+  function degreeNameFor(i, notes) {
+    if (i !== 6) return DEGREE_NAMES[i] || "";
+    // Distinguish leading tone (½ step below tonic) from subtonic (whole step).
+    const c7 = T.Note.chroma(notes[6]);
+    const c1 = T.Note.chroma(notes[0]);
+    if (c7 == null || c1 == null) return "subtonic";
+    const gap = (c1 - c7 + 12) % 12; // semitones up to the tonic
+    return gap === 1 ? "leading tone" : "subtonic";
+  }
 
   function getDiatonicChords(tonic, scaleId, withSeventh = false) {
     const info = getKeyInfo(tonic, scaleId);
@@ -255,7 +270,6 @@
         q === "augMaj7" ? "+maj7" :
         q === "aug7"  ? "+7"  : q;
       const name = pretty(root) + sym;
-      const fn = (fam === "major" ? FUNC_MAJOR : FUNC_MINOR)[i] || "";
       return {
         degreeIdx: i,
         roman,
@@ -263,7 +277,7 @@
         root, third, fifth, seventh,
         quality: q,
         notes: chordNotes,
-        function: fn,
+        degreeName: degreeNameFor(i, notes),
       };
     });
   }
@@ -460,35 +474,34 @@
   // Triad notes are then computed at runtime.
   const BORROWED_FROM_MAJOR_HOME = {
     aeolian: [
-      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "chromatic mediant" },
-      { roman: "\u266dVI",  degree: "6m", quality: "maj", function: "chromatic mediant" },
+      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "flat mediant" },
+      { roman: "\u266dVI",  degree: "6m", quality: "maj", function: "flat submediant" },
       { roman: "\u266dVII", degree: "7m", quality: "maj", function: "subtonic" },
-      { roman: "iv",        degree: "4P", quality: "min", function: "minor predominant" },
-      { roman: "v",         degree: "5P", quality: "min", function: "weakened dominant" },
-      { roman: "ii\u00b0",  degree: "2M", quality: "dim", function: "dark predominant" },
+      { roman: "iv",        degree: "4P", quality: "min", function: "minor subdominant" },
+      { roman: "v",         degree: "5P", quality: "min", function: "minor dominant" },
+      { roman: "ii\u00b0",  degree: "2M", quality: "dim", function: "diminished supertonic" },
     ],
     dorian: [
-      { roman: "II",        degree: "2M", quality: "maj", function: "bright predominant" },
-      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "chromatic mediant" },
+      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "flat mediant" },
       { roman: "\u266dVII", degree: "7m", quality: "maj", function: "subtonic" },
     ],
     phrygian: [
       { roman: "\u266dII",  degree: "2m", quality: "maj", function: "Neapolitan" },
-      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "chromatic mediant" },
-      { roman: "iv",        degree: "4P", quality: "min", function: "minor predominant" },
+      { roman: "\u266dIII", degree: "3m", quality: "maj", function: "flat mediant" },
+      { roman: "iv",        degree: "4P", quality: "min", function: "minor subdominant" },
       { roman: "\u266dvii", degree: "7m", quality: "min", function: "minor subtonic" },
     ],
     lydian: [
-      { roman: "II",        degree: "2M", quality: "maj", function: "bright predominant" },
-      { roman: "\u266fiv\u00b0", degree: "4A", quality: "dim", function: "lydian leading\u2011tone" },
+      { roman: "II",        degree: "2M", quality: "maj", function: "major supertonic" },
+      { roman: "\u266fiv\u00b0", degree: "4A", quality: "dim", function: "raised subdominant" },
     ],
     mixolydian: [
       { roman: "\u266dVII", degree: "7m", quality: "maj", function: "subtonic" },
-      { roman: "v",         degree: "5P", quality: "min", function: "weakened dominant" },
+      { roman: "v",         degree: "5P", quality: "min", function: "minor dominant" },
     ],
     "harmonic minor": [
-      { roman: "iv",        degree: "4P", quality: "min", function: "minor predominant" },
-      { roman: "\u266dVI",  degree: "6m", quality: "maj", function: "chromatic mediant" },
+      { roman: "iv",        degree: "4P", quality: "min", function: "minor subdominant" },
+      { roman: "\u266dVI",  degree: "6m", quality: "maj", function: "flat submediant" },
       { roman: "\u266dIII+", degree: "3m", quality: "aug", function: "augmented mediant" },
     ],
     "melodic minor": [
@@ -503,23 +516,23 @@
     "parallel major (Ionian)": [
       { roman: "I",        degree: "1P", quality: "maj", function: "Picardy tonic" },
       { roman: "III",      degree: "3M", quality: "maj", function: "raised mediant" },
-      { roman: "IV",       degree: "4P", quality: "maj", function: "bright predominant" },
+      { roman: "IV",       degree: "4P", quality: "maj", function: "major subdominant" },
       { roman: "vi",       degree: "6M", quality: "min", function: "raised submediant" },
     ],
     dorian: [
-      { roman: "IV",       degree: "4P", quality: "maj", function: "bright predominant" },
-      { roman: "ii",       degree: "2M", quality: "min", function: "dorian supertonic" },
+      { roman: "IV",       degree: "4P", quality: "maj", function: "major subdominant" },
+      { roman: "ii",       degree: "2M", quality: "min", function: "minor supertonic" },
     ],
     phrygian: [
       { roman: "\u266dII", degree: "2m", quality: "maj", function: "Neapolitan" },
       { roman: "\u266dvii", degree: "7m", quality: "min", function: "minor subtonic" },
     ],
     "harmonic minor": [
-      { roman: "V",        degree: "5P", quality: "maj", function: "secondary\u2011strength dominant" },
+      { roman: "V",        degree: "5P", quality: "maj", function: "major dominant" },
       { roman: "vii\u00b0", degree: "7M", quality: "dim", function: "leading\u2011tone" },
     ],
     "melodic minor": [
-      { roman: "IV",       degree: "4P", quality: "maj", function: "bright predominant" },
+      { roman: "IV",       degree: "4P", quality: "maj", function: "major subdominant" },
       { roman: "vi\u00b0", degree: "6M", quality: "dim", function: "diminished submediant" },
     ],
   };
