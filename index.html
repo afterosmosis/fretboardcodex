@@ -92,32 +92,35 @@
   </filter>
 </svg>
 
-<div id="root">
-  <!-- Crawlable fallback content. React replaces this on mount; search engines
-       and social/AI scrapers that don't run JS see this instead of a blank page. -->
-  <div style="max-width:760px;margin:0 auto;padding:48px 20px;font-family:system-ui,sans-serif;line-height:1.6;color:#1f2326">
-    <h1>Fretboard Codex</h1>
-    <p>Fretboard Codex is a free, theory-driven guitar tool that maps music theory
-       directly onto an interactive fretboard. It's built for guitarists who want to
-       <em>understand</em> what they're playing, not just memorize shapes.</p>
-    <h2>What you can explore</h2>
-    <ul>
-      <li><strong>Scales &amp; modes</strong> — major, natural/harmonic/melodic minor, and the
-          seven modes (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian),
-          shown live across the fretboard in any key.</li>
-      <li><strong>Diatonic chords</strong> — every chord built from the scale, with roman
-          numerals and scale-degree names (tonic, supertonic, mediant, and so on).</li>
-      <li><strong>Chord voicings</strong> — playable shapes with extensions (9, 11, 13)
-          and the resulting chord spelling.</li>
-      <li><strong>Circle of fifths</strong> — key relationships and signatures at a glance.</li>
-      <li><strong>Modal interchange</strong> — borrowed chords from parallel modes, labeled
-          with accurate theory terms (Neapolitan, flat mediant, minor subdominant, and more).</li>
-    </ul>
-    <p>Fretboard Codex runs entirely in your browser, works offline once loaded, and is
-       free to use. <a href="https://afterosmosis.com">Created by afterosmosis.</a></p>
-    <p><em>Loading the interactive app… if it doesn't appear, enable JavaScript.</em></p>
-  </div>
-</div>
+<div id="root"></div>
+
+<!-- Permanent semantic content for readers that don't render the interactive app:
+     search engine snippets, Reader Mode / "Summarize" extraction, social/AI scrapers.
+     Lives as a sibling of #root so React (which only ever touches #root) never
+     removes it — unlike the old in-root fallback, this survives after the app
+     mounts. Visually hidden (not display:none, so most content-extraction
+     heuristics still see it) since the real UI covers this ground visually. -->
+<article id="seo-fallback" class="visually-hidden">
+  <h1>Fretboard Codex</h1>
+  <p>Fretboard Codex is a free, theory-driven guitar tool that maps music theory
+     directly onto an interactive fretboard. It's built for guitarists who want to
+     understand what they're playing, not just memorize shapes.</p>
+  <h2>What you can explore</h2>
+  <ul>
+    <li>Scales &amp; modes — major, natural/harmonic/melodic minor, and the
+        seven modes (Ionian, Dorian, Phrygian, Lydian, Mixolydian, Aeolian, Locrian),
+        shown live across the fretboard in any key.</li>
+    <li>Diatonic chords — every chord built from the scale, with roman
+        numerals and scale-degree names (tonic, supertonic, mediant, and so on).</li>
+    <li>Chord voicings — playable shapes with extensions (9, 11, 13)
+        and the resulting chord spelling.</li>
+    <li>Circle of fifths — key relationships and signatures at a glance.</li>
+    <li>Modal interchange — borrowed chords from parallel modes, labeled
+        with accurate theory terms (Neapolitan, flat mediant, minor subdominant, and more).</li>
+  </ul>
+  <p>Fretboard Codex runs entirely in your browser, works offline once loaded, and is
+     free to use. Created by afterosmosis (https://afterosmosis.com).</p>
+</article>
 
 <script src="theory.js"></script>
 <script type="text/babel" src="tweaks-panel.jsx"></script>

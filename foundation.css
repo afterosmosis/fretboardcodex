@@ -2313,6 +2313,19 @@ button.keycard-cell.clickable:hover .sub-cta {
 }
 .footer .codex-mark--by a:hover { border-bottom-color: var(--accent); }
 
+/* Visually hidden but still present in the DOM — for search snippets, Reader
+   Mode / "Summarize" content extraction, and non-JS crawlers. Not display:none
+   so most readability heuristics still pick it up. */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 /* =========================================================================
    STAGE 5 — Compact density (tweakable)
    ========================================================================= */
