@@ -86,14 +86,14 @@ function ScrambleText({ value, className }) {
     prev.current = value;
     const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) { setDisplay(value); return; }
-    const glyphs = "ABCDEFG".split("");
+    const glyphs = "ABCDEFG#3579".split("");
     let i = 0;
-    const steps = 3;
+    const steps = 7;               // ~7 frames …
     const id = setInterval(() => {
       i++;
       if (i >= steps) { clearInterval(id); setDisplay(value); }
       else setDisplay(glyphs[Math.floor(Math.random() * glyphs.length)]);
-    }, 48);
+    }, 55);                        // … × 55ms ≈ 385ms, clearly perceptible
     return () => clearInterval(id);
   }, [value]);
   return <span className={className}>{display}</span>;
@@ -109,7 +109,7 @@ function FretboardHelp() {
         aria-expanded={open}
         onClick={() => setOpen(o => !o)}
         title="What am I looking at?">
-        {open ? "× hide" : "? what am I looking at"}
+        {open ? "× hide" : "legend"}
       </button>
       {open && (
         <div className="legend-help">
@@ -692,7 +692,7 @@ function App() {
                 ? <>showing chord tones only · <button className="linkbtn" onClick={clearFocus}>back to scale</button></>
                 : cagedShape
                 ? <>showing {cagedShape}-shape window · <button className="linkbtn" onClick={clearFocus}>back to full scale</button></>
-                : "shape + label always present · color is redundant"}
+                : null}
             </span>
             <FretboardHelp />
           </div>
