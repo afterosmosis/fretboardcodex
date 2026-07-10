@@ -191,7 +191,7 @@ function DiatonicHarmony({ chords, sevenths, onToggleSevenths, chordIdx, onChord
 // ============== Tweak defaults — authoring knobs ==============
 const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
   "defaultTheme":    "light",
-  "defaultScheme":   "rebel",
+  "defaultScheme":   "neon",
   "showSchemesFab":  true,
   "compactSpacing":  false
 }/*EDITMODE-END*/;
@@ -695,7 +695,7 @@ function App() {
                     options={["light", "dark"]}
                     onChange={(v) => setTweak("defaultTheme", v)} />
         <TweakRadio label="Default palette" value={t.defaultScheme}
-                    options={["rebel", "console", "verdigris", "rust", "phosphor", "hazard"]}
+                    options={["neon", "synth", "console", "rebel", "rust", "hazard", "verdigris", "phosphor"]}
                     onChange={(v) => setTweak("defaultScheme", v)} />
         <TweakSection label="UI" />
         <TweakToggle label="Show palette FAB for end users" value={t.showSchemesFab}
@@ -710,12 +710,14 @@ function App() {
 // ============== ColorSchemeFab ==============
 // End-user-facing floating palette switcher.
 const SCHEMES = [
-  { id: "rebel",     name: "rebel base",    sub: "warm sand · burnt orange",     swatch: ["#e7dccb", "#cf6a32", "#2b2520"] },
+  { id: "neon",      name: "neon circuit",  sub: "black · logo cyan",              swatch: ["#eef6f7", "#32e0d8", "#0f1720"] },
+  { id: "synth",     name: "synth grid",    sub: "violet · hot magenta",           swatch: ["#f3e9f5", "#e0299b", "#231a30"] },
   { id: "console",   name: "console amber", sub: "charcoal · CRT amber",          swatch: ["#1f2226", "#e1a838", "#3a3f47"] },
-  { id: "verdigris", name: "verdigris",     sub: "steel · oxidized copper",        swatch: ["#dde2e4", "#3aa088", "#2b3540"] },
+  { id: "rebel",     name: "rebel base",    sub: "warm sand · burnt orange",     swatch: ["#e7dccb", "#cf6a32", "#2b2520"] },
   { id: "rust",      name: "rust + bone",   sub: "bone · iron oxide",              swatch: ["#ecdfd0", "#9c3a2b", "#2a221e"] },
-  { id: "phosphor",  name: "phosphor",      sub: "dark olive · CRT green",         swatch: ["#1a1f1a", "#7fd673", "#2c352c"] },
   { id: "hazard",    name: "hazard",        sub: "concrete · radiation yellow",    swatch: ["#d6d2c4", "#d8c530", "#272622"] },
+  { id: "verdigris", name: "verdigris",     sub: "steel · oxidized copper",        swatch: ["#dde2e4", "#3aa088", "#2b3540"] },
+  { id: "phosphor",  name: "phosphor",      sub: "dark olive · CRT green",         swatch: ["#1a1f1a", "#7fd673", "#2c352c"] },
 ];
 
 function ColorSchemeFab({ scheme, setScheme, theme, setTheme }) {
@@ -757,7 +759,7 @@ function ColorSchemeFab({ scheme, setScheme, theme, setTheme }) {
             ))}
           </div>
           <div className="cs-foot">
-            <span>// six palettes · each tuned for day + night</span>
+            <span>// {SCHEMES.length} palettes · each tuned for day + night</span>
           </div>
         </div>
       )}

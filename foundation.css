@@ -1885,6 +1885,82 @@ button.keycard-cell.clickable:hover .sub-cta {
   --c-7th:   oklch(0.78 0.16 40);
 }
 
+/* ---- 7. NEON CIRCUIT — black + logo cyan — direct nod to the wordmark ---- */
+[data-scheme="neon"][data-theme="light"] {
+  --bg:        oklch(0.965 0.006 220);
+  --bg-2:      oklch(0.985 0.004 220);
+  --surface:   oklch(0.995 0.003 220);
+  --surface-2: oklch(0.92 0.008 220);
+  --ink:       oklch(0.20 0.020 230);
+  --ink-2:     oklch(0.36 0.020 230);
+  --ink-3:     oklch(0.54 0.018 228);
+  --ink-4:     oklch(0.72 0.012 226);
+  --rule:      oklch(0.86 0.010 222);
+  --rule-2:    oklch(0.76 0.012 220);
+  --accent:    oklch(0.60 0.16 195);
+  --accent-ink: oklch(0.99 0.003 220);
+  --c-root:  oklch(0.60 0.16 195);
+  --c-3rd:   oklch(0.55 0.20 320);
+  --c-5th:   oklch(0.58 0.16 145);
+  --c-7th:   oklch(0.72 0.18 80);
+}
+[data-scheme="neon"][data-theme="dark"] {
+  --bg:        oklch(0.15 0.012 250);
+  --bg-2:      oklch(0.19 0.014 250);
+  --surface:   oklch(0.23 0.016 250);
+  --surface-2: oklch(0.28 0.018 250);
+  --ink:       oklch(0.95 0.020 200);
+  --ink-2:     oklch(0.82 0.020 200);
+  --ink-3:     oklch(0.64 0.020 200);
+  --ink-4:     oklch(0.46 0.020 200);
+  --rule:      oklch(0.32 0.020 250);
+  --rule-2:    oklch(0.40 0.020 250);
+  --accent:    oklch(0.85 0.15 195);
+  --accent-ink: oklch(0.14 0.010 250);
+  --c-root:  oklch(0.85 0.15 195);
+  --c-3rd:   oklch(0.75 0.20 330);
+  --c-5th:   oklch(0.78 0.16 150);
+  --c-7th:   oklch(0.84 0.16 85);
+}
+
+/* ---- 8. SYNTH GRID — magenta + violet — synthwave cyberpunk duo ---- */
+[data-scheme="synth"][data-theme="light"] {
+  --bg:        oklch(0.95 0.012 300);
+  --bg-2:      oklch(0.975 0.009 300);
+  --surface:   oklch(0.99 0.006 300);
+  --surface-2: oklch(0.90 0.016 300);
+  --ink:       oklch(0.20 0.030 300);
+  --ink-2:     oklch(0.36 0.026 300);
+  --ink-3:     oklch(0.54 0.022 300);
+  --ink-4:     oklch(0.72 0.016 300);
+  --rule:      oklch(0.85 0.016 300);
+  --rule-2:    oklch(0.74 0.020 300);
+  --accent:    oklch(0.58 0.22 345);
+  --accent-ink: oklch(0.99 0.005 300);
+  --c-root:  oklch(0.58 0.22 345);
+  --c-3rd:   oklch(0.55 0.18 220);
+  --c-5th:   oklch(0.58 0.16 165);
+  --c-7th:   oklch(0.70 0.18 90);
+}
+[data-scheme="synth"][data-theme="dark"] {
+  --bg:        oklch(0.17 0.030 300);
+  --bg-2:      oklch(0.21 0.032 300);
+  --surface:   oklch(0.25 0.034 300);
+  --surface-2: oklch(0.30 0.036 300);
+  --ink:       oklch(0.96 0.020 300);
+  --ink-2:     oklch(0.83 0.020 300);
+  --ink-3:     oklch(0.65 0.020 300);
+  --ink-4:     oklch(0.48 0.020 300);
+  --rule:      oklch(0.36 0.030 300);
+  --rule-2:    oklch(0.45 0.030 300);
+  --accent:    oklch(0.78 0.22 345);
+  --accent-ink: oklch(0.16 0.020 300);
+  --c-root:  oklch(0.78 0.22 345);
+  --c-3rd:   oklch(0.80 0.14 210);
+  --c-5th:   oklch(0.78 0.14 155);
+  --c-7th:   oklch(0.84 0.16 90);
+}
+
 /* =========================================================================
    STAGE 5 — Collapsible panel chevron
    Each panel-head can host a <CollapseBtn /> at its start.
