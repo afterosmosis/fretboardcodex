@@ -436,10 +436,13 @@ function App() {
 
         {/* ============== TOP BAR ============== */}
         <header className="topbar">
-          <div className="brand">
-            <img src="icons/mark-cyan.png" alt="" className="brand-mark" />
-            <span className="mark">fretboard codex</span>
-            <span className="tag">guitar theory interface</span>
+          <div className="brand-col">
+            <div className="brand">
+              <img src="icons/mark-cyan.png" alt="" className="brand-mark" />
+              <span className="mark">fretboard codex</span>
+              <span className="tag">guitar theory interface</span>
+            </div>
+            <p className="brand-tagline">Scales, modes, chords, voicings, and modal interchange mapped live on an interactive fretboard.</p>
           </div>
           <div className="topbar-right">
             <button

@@ -128,8 +128,20 @@ body {
   padding-bottom: 14px;
   border-bottom: 1px solid var(--rule);
 }
+.brand-col {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
 .brand {
   display: flex; align-items: baseline; gap: 10px;
+}
+.brand-tagline {
+  font-family: var(--f-mono);
+  font-size: 11px;
+  color: var(--ink-3);
+  margin: 0;
 }
 .brand-mark {
   height: 26px;
