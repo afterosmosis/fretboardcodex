@@ -438,7 +438,7 @@ function App() {
         <header className="topbar">
           <div className="brand-col">
             <div className="brand">
-              <img src="icons/mark-cyan.png" alt="" className="brand-mark" />
+              <span className="brand-mark" role="img" aria-label="Fretboard Codex logo"></span>
               <span className="mark">fretboard codex</span>
               <span className="tag">guitar theory interface</span>
             </div>
