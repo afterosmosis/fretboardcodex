@@ -430,9 +430,14 @@ function App() {
     <div className="shell">
       <div className="frame">
 
+        <div className="mobile-note" role="note">
+          Fretboard Codex is best viewed in landscape or on a larger screen.
+        </div>
+
         {/* ============== TOP BAR ============== */}
         <header className="topbar">
           <div className="brand">
+            <img src="icons/mark-cyan.png" alt="" className="brand-mark" />
             <span className="mark">fretboard codex</span>
             <span className="tag">guitar theory interface</span>
           </div>
@@ -681,6 +686,7 @@ function App() {
             <span className="codex-mark__sep">//</span>
             <a href="https://buymeacoffee.com/afterosmosis" target="_blank" rel="noopener noreferrer">buymeacoffee</a>
           </span>
+          <ShareRow />
           <span className="codex-mark">fretboardcodex.com</span>
         </footer>
       </div>
@@ -704,6 +710,39 @@ function App() {
                      onChange={(v) => setTweak("compactSpacing", v)} />
       </TweaksPanel>
     </div>
+  );
+}
+
+// ============== ShareRow ==============
+// Small, non-obtrusive share links for the footer. Text-only, matches the
+// footer's mono/uppercase "codex-mark" styling rather than icon artwork.
+function ShareRow() {
+  const [copied, setCopied] = React.useState(false);
+  const url = "https://fretboardcodex.com";
+  const text = "Fretboard Codex \u2014 guitar scales, modes, voicings & modal interchange, mapped live on an interactive fretboard.";
+
+  const copyLink = async () => {
+    try {
+      await navigator.clipboard.writeText(url);
+    } catch (e) {
+      // clipboard API unavailable (e.g. insecure context) — silently no-op
+    }
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1600);
+  };
+
+  return (
+    <span className="codex-mark share-row">
+      share
+      <span className="codex-mark__sep">//</span>
+      <a href={`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`}
+         target="_blank" rel="noopener noreferrer">twitter</a>
+      <a href={`https://www.reddit.com/submit?url=${encodeURIComponent(url)}&title=${encodeURIComponent(text)}`}
+         target="_blank" rel="noopener noreferrer">reddit</a>
+      <button type="button" className="share-copy" onClick={copyLink}>
+        {copied ? "copied" : "copylink"}
+      </button>
+    </span>
   );
 }
 
