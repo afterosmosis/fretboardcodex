@@ -47,6 +47,83 @@ function writePrefs(p) {
   try { localStorage.setItem(STORAGE_KEY, JSON.stringify(p)); } catch {}
 }
 
+/* Deep-linkable state: encode key/scale/scheme/theme in the URL hash so a view
+   can be bookmarked and shared. Hash wins over saved prefs on load. */
+function readHash() {
+  try {
+    const h = (location.hash || "").replace(/^#/, "");
+    if (!h) return {};
+    const p = new URLSearchParams(h);
+    const out = {};
+    if (p.get("key"))    out.tonic  = p.get("key");
+    if (p.get("scale"))  out.scale  = p.get("scale");
+    if (p.get("scheme")) out.scheme = p.get("scheme");
+    if (p.get("theme"))  out.theme  = p.get("theme");
+    return out;
+  } catch { return {}; }
+}
+function writeHash({ tonic, scale, scheme, theme }) {
+  try {
+    const p = new URLSearchParams();
+    p.set("key", tonic);
+    p.set("scale", scale);
+    p.set("scheme", scheme);
+    p.set("theme", theme);
+    const next = "#" + p.toString();
+    if (next !== location.hash) {
+      history.replaceState(null, "", next);
+    }
+  } catch {}
+}
+
+/* Glyph-scramble: on value change, flash a couple of random note glyphs before
+   settling. Purposeful (tied to a state change), reduced-motion-safe. */
+function ScrambleText({ value, className }) {
+  const [display, setDisplay] = React.useState(value);
+  const prev = React.useRef(value);
+  React.useEffect(() => {
+    if (prev.current === value) return;
+    prev.current = value;
+    const reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduce) { setDisplay(value); return; }
+    const glyphs = "ABCDEFG".split("");
+    let i = 0;
+    const steps = 3;
+    const id = setInterval(() => {
+      i++;
+      if (i >= steps) { clearInterval(id); setDisplay(value); }
+      else setDisplay(glyphs[Math.floor(Math.random() * glyphs.length)]);
+    }, 48);
+    return () => clearInterval(id);
+  }, [value]);
+  return <span className={className}>{display}</span>;
+}
+
+/* Small "what am I looking at" explainer toggled from the fretboard legend. */
+function FretboardHelp() {
+  const [open, setOpen] = React.useState(false);
+  return (
+    <>
+      <button
+        className="legend-help-btn"
+        aria-expanded={open}
+        onClick={() => setOpen(o => !o)}
+        title="What am I looking at?">
+        {open ? "× hide" : "? what am I looking at"}
+      </button>
+      {open && (
+        <div className="legend-help">
+          Each dot is a note in the current key, placed where you'd fret it. The
+          <b> root</b> is the note the key is named after; the <b>3rd</b>, <b>5th</b>,
+          and <b>7th</b> are the chord tones built on top of it — they're what give a
+          chord its color. Dots without a color are the remaining scale tones. Click any
+          chord above to spotlight just its tones on the board.
+        </div>
+      )}
+    </>
+  );
+}
+
 function tonicEntryFor(noteName) {
   if (!noteName) return TONICS[0];
   const hit = TONICS.find(t => t.id === noteName);
@@ -198,7 +275,7 @@ const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
 
 // ============== App ==============
 function App() {
-  const saved = readPrefs() || {};
+  const saved = { ...(readPrefs() || {}), ...readHash() };
   const [t, setTweak] = useTweaks(TWEAK_DEFAULTS);
 
   const [theme, setTheme]       = React.useState(saved.theme   || t.defaultTheme);
@@ -271,6 +348,7 @@ function App() {
 
   React.useEffect(() => {
     writePrefs({ theme, tonic, scale, lefty, frets, palette, scheme, sevenths, voicingsTab, panelOrder });
+    writeHash({ tonic, scale, scheme, theme });
   }, [theme, tonic, scale, lefty, frets, palette, scheme, sevenths, voicingsTab, panelOrder]);
 
   const swapTo = React.useCallback((newTonic, newScale) => {
@@ -438,7 +516,10 @@ function App() {
         <header className="topbar">
           <div className="brand-col">
             <div className="brand">
-              <LogoMark className="brand-mark" />
+              <span className="brand-logo">
+                <LogoMark className="brand-mark" />
+                <span className="brand-logo-sweep" aria-hidden="true"></span>
+              </span>
               <span className="mark">fretboard codex</span>
               <span className="tag">guitar theory interface</span>
             </div>
@@ -471,7 +552,7 @@ function App() {
             <span className="reticle bl"></span>
             <span className="reticle br"></span>
             <span className="tonic-letter">
-              {currentTonic.letter}
+              <ScrambleText value={currentTonic.letter} />
               {currentTonic.acc && <span className="tonic-accidental">{currentTonic.acc}</span>}
             </span>
             <span className="tonic-scale">{currentScale.label}</span>
@@ -613,6 +694,7 @@ function App() {
                 ? <>showing {cagedShape}-shape window · <button className="linkbtn" onClick={clearFocus}>back to full scale</button></>
                 : "shape + label always present · color is redundant"}
             </span>
+            <FretboardHelp />
           </div>
         </section>
 
