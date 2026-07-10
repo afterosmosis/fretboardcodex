@@ -145,15 +145,16 @@ body {
 }
 .brand-mark {
   display: inline-block;
-  height: 30px;
-  width: 28px;
+  height: 26px;
+  aspect-ratio: 2890 / 1085;
   align-self: center;
   flex-shrink: 0;
-  /* Recolored to the active scheme's accent so the logo harmonizes with every
-     palette (neon cyan, amber, rust, etc.) instead of being locked to cyan. */
-  background-color: var(--accent);
-  -webkit-mask: url(icons/mark-body-mask.png) center / contain no-repeat;
-  mask: url(icons/mark-body-mask.png) center / contain no-repeat;
+  /* Full guitar logo. Black art on light themes, white art on dark themes —
+     plain background-image (bulletproof in every browser, unlike CSS masks). */
+  background: url("icons/logo-full-black.png") left center / contain no-repeat;
+}
+[data-theme="dark"] .brand-mark {
+  background-image: url("icons/logo-full-white.png");
 }
 .brand .mark {
   font-family: var(--f-display);
