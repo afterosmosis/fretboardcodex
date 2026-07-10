@@ -113,14 +113,16 @@ body {
       oklch(1 0 0 / 0.018) 3px 4px
     );
 }
-/* Tighter CRT scanlines on the two "console" schemes only — deepens their
-   retro-terminal feel without touching the clean light or non-CRT palettes. */
+/* Static CRT scanline grid on the two "console" schemes only — deepens their
+   retro-terminal feel without touching the clean light or non-CRT palettes. Drop
+   the grain filter + blend here so the lines render crisp instead of noise. */
 [data-theme="dark"][data-scheme="console"] .shell::after,
 [data-theme="dark"][data-scheme="phosphor"] .shell::after {
+  filter: none;
+  mix-blend-mode: normal;
+  opacity: 1;
   background-image:
-    repeating-linear-gradient(0deg, transparent 0 3px, oklch(1 0 0 / 0.020) 3px 4px),
-    repeating-linear-gradient(0deg, transparent 0 2px, oklch(0 0 0 / 0.055) 2px 3px);
-  opacity: 0.55;
+    repeating-linear-gradient(0deg, oklch(0 0 0 / 0.16) 0 1px, transparent 1px 3px);
 }
 
 .frame {
@@ -336,7 +338,6 @@ body {
   background: none;
   border: none;
   padding: 0;
-  margin-left: 12px;
   font-family: var(--f-mono);
   font-size: 10px;
   letter-spacing: 0.06em;
@@ -612,14 +613,14 @@ button.keycard-cell.clickable:hover .sub-cta {
 
 /* note legend */
 .legend {
-  display: flex; flex-wrap: wrap; gap: 14px;
-  padding: 10px 16px;
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 20px;
+  padding: 11px 16px;
   border-top: 1px solid var(--rule);
   font-family: var(--f-mono);
   font-size: 11px;
   color: var(--ink-3);
 }
-.legend .item { display: inline-flex; align-items: center; gap: 6px; }
+.legend .item { display: inline-flex; align-items: center; gap: 7px; }
 .swatch { width: 12px; height: 12px; border: 1px solid var(--ink); border-radius: 50%; display: inline-block; }
 .swatch.root { border-radius: var(--rad-sm); background: var(--c-root); }
 .swatch.t3 { background: var(--c-3rd); }
