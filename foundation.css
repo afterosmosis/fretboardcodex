@@ -2368,16 +2368,14 @@ button.keycard-cell.clickable:hover .sub-cta {
 }
 
 /* Visually hidden but still present in the DOM — for search snippets, Reader
-   Mode / "Summarize" content extraction, and non-JS crawlers. Not display:none
-   so most readability heuristics still pick it up. */
+   Mode / "Summarize" content extraction, and non-JS crawlers. Positioned
+   off-canvas (not clipped to 1px) so it keeps real layout dimensions —
+   zero-size/clip-rect hiding gets filtered out by some readability parsers. */
 .visually-hidden {
   position: absolute;
-  width: 1px; height: 1px;
-  padding: 0; margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border: 0;
+  top: 0;
+  left: -9999px;
+  width: 640px;
 }
 
 /* =========================================================================
