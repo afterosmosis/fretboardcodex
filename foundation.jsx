@@ -438,7 +438,7 @@ function App() {
         <header className="topbar">
           <div className="brand-col">
             <div className="brand">
-              <span className="brand-mark" role="img" aria-label="Fretboard Codex logo"></span>
+              <LogoMark className="brand-mark" />
               <span className="mark">fretboard codex</span>
               <span className="tag">guitar theory interface</span>
             </div>

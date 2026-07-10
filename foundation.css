@@ -146,15 +146,11 @@ body {
 .brand-mark {
   display: inline-block;
   height: 26px;
-  aspect-ratio: 2890 / 1085;
+  width: auto;
   align-self: center;
   flex-shrink: 0;
-  /* Full guitar logo. Black art on light themes, white art on dark themes —
-     plain background-image (bulletproof in every browser, unlike CSS masks). */
-  background: url("icons/logo-full-black.png") left center / contain no-repeat;
-}
-[data-theme="dark"] .brand-mark {
-  background-image: url("icons/logo-full-white.png");
+  /* Inline SVG filled with currentColor — follows the active palette's accent. */
+  color: var(--accent);
 }
 .brand .mark {
   font-family: var(--f-display);
