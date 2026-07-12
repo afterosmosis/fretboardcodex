@@ -9,7 +9,7 @@
  * Bump CACHE_VERSION whenever the precache list or strategy changes; old caches are pruned.
  */
 
-const CACHE_VERSION = "v20";
+const CACHE_VERSION = "v23";
 const SHELL_CACHE   = `fretboard-shell-${CACHE_VERSION}`;
 const RUNTIME_CACHE = `fretboard-runtime-${CACHE_VERSION}`;
 

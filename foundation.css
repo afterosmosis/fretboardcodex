@@ -1558,7 +1558,7 @@ button.keycard-cell.clickable:hover .sub-cta {
 }
 .tl-row {
   display: grid;
-  grid-template-columns: 130px 110px minmax(0, 1fr) auto;
+  grid-template-columns: 130px 136px minmax(0, 1fr) auto;
   gap: 18px;
   align-items: center;
   padding: 14px 4px;
